@@ -19,11 +19,16 @@ jobs:
       - name: Check out the repo
         uses: actions/checkout@v2
 
-      - name: Run Git Version
-        run: |
-          git fetch --prune --unshallow
-          docker run -v ${{ github.workspace }}:/github/workspace --rm mcasperson/gitversion:5.0.2-linux-centos-7-netcoreapp2.2 /github/workspace /nofetch > version.txt
-          cat version.txt
+      # - name: Run Git Version
+      #   run: |
+      #     git fetch --prune --unshallow
+      #     docker run -v ${{ github.workspace }}:/github/workspace --rm mcasperson/gitversion:5.0.2-linux-centos-7-netcoreapp2.2 /github/workspace /nofetch > version.txt
+      #     cat version.txt
+
+      - name: Get Git Version
+        uses: docker://mcasperson/gitversion:5.0.2-linux-centos-7-netcoreapp2.2
+        with:
+          args: /github/workspace /nofetch /exec /bin/sh /execargs "-c \"echo $GitVersion_FullSemVer > /github/workspace/version.txt\""    
 
       - name: Yarn Build
         run: |
