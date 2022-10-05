@@ -32,7 +32,7 @@ jobs:
           cat public/mix-manifest.json # See asset versions in log
 
       - name: Install dependencies
-        uses: php-actions/composer@main
+        uses: php-actions/composer@master
         with:
           dev: no
           version: 2
